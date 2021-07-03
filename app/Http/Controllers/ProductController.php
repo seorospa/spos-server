@@ -22,6 +22,19 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
+    public function create_bulk()
+    {
+        $arr = $this->request->all();
+        $ids = [];
+
+        foreach ($arr as $params) {
+            $product = Product::create($params);
+            $ids[] = $product->id;
+        }
+
+        return response()->json(['ids_range' => [min($ids), max($ids)]], 201);
+    }
+
     public function create()
     {
         $this->validate(
@@ -35,9 +48,9 @@ class ProductController extends Controller
 
         $this->validate_props();
 
-        $ticket = Product::create($this->request->all());
+        $product = Product::create($this->request->all());
 
-        return response()->json($ticket);
+        return response()->json($product);
     }
 
     public function read($id)

@@ -2,7 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-$router->post('auth', 'UserController@login');
+$router->post('auth/{id}', 'UserController@login');
 $router->get('users', 'UserController@list');
 
 $router->group(['middleware' => 'auth'], function () use ($router) {
@@ -19,6 +19,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->group(['prefix' => 'products'], function () use ($router) {
         $router->get('/', 'ProductController@list');
         $router->post('/', 'ProductController@create');
+        $router->post('/bulk', 'ProductController@create_bulk');
         $router->get('{id}', 'ProductController@read');
         $router->put('{id}', 'ProductController@update');
         $router->delete('{id}', 'ProductController@delete');

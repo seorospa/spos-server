@@ -16,14 +16,8 @@ class UserController extends Controller
 
     public function create()
     {
-        $this->validate(
-            $this->request,
-            [
-                'name' => 'required|max:31',
-                'password' => 'required|max:31',
-                'email' => 'email'
-            ]
-        );
+        $this->validate($this->request, ['name' => 'required', 'password' => 'required']);
+        $this->validate_params();
 
         $params = $this->request->all();
         $params['password'] = Hash::make($params['password']);
@@ -41,13 +35,8 @@ class UserController extends Controller
 
     public function update($id)
     {
-        $this->validate(
-            $this->request,
-            [
-                'name' => 'required|max:31',
-                'password' => 'required|max:31'
-            ]
-        );
+        $this->validate($this->request, ['password' => 'required']);
+        $this->validate_params();
 
         $params = $this->request->all();
         $params['password'] = Hash::make($params['password']);
@@ -64,23 +53,17 @@ class UserController extends Controller
         return response('');
     }
 
-    public function login()
+    public function login($id)
     {
-        $this->validate(
-            $this->request,
-            [
-                'id' => 'required|integer',
-                'password' => 'required|max:63'
-            ]
-        );
+        $this->validate($this->request, ['password' => 'required|max:63|min:8']);
 
-        $params = (object)$this->request->all();
+        $password = $this->request->password;
 
-        $user = User::find($params->id);
+        $user = User::find($id);
         $code = 422;
-        $token = [];
+        $token = null;
 
-        if ($user && Hash::check($params->password, $user->password)) {
+        if ($user && Hash::check($password, $user->password)) {
             $code = 200;
             $token = $user->generateJWT();
         }
@@ -92,5 +75,17 @@ class UserController extends Controller
     {
         $logged = (object)Auth::user();
         return response()->json($logged->generateJWT());
+    }
+
+    public function validate_params()
+    {
+        return $this->validate(
+            $this->request,
+            [
+                'name' => 'max:63|min:1',
+                'password' => 'max:63|min:8',
+                'mail' => 'mail'
+            ]
+        );
     }
 }
