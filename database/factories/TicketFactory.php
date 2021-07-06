@@ -20,7 +20,7 @@ class TicketFactory extends Factory
         return [
             'name' => $this->faker->name,
             'user' => User::all()->random()->id,
-            'products' => generateFakeProducts,
+            'products' => $this->generateFakeProducts(),
             'client' => Client::all()->random()->id,
             'status' => $this->faker->randomElement(['pending', 'paid', 'cancelled']),
         ];
