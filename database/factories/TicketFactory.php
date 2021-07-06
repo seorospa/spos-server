@@ -3,27 +3,26 @@
 namespace Database\Factories;
 
 use App\Models\Ticket;
+use App\Models\User;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TicketFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Ticket::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+    private function generateFakeProducts() {
+      return '[]'; // TODO: ¿Cómo se verá la lista de productos?
+    }
+
     public function definition()
     {
         return [
             'name' => $this->faker->name,
-            'user' => $this->faker->random_int(1, 100)
+            'user' => User::all()->random()->id,
+            'products' => $this->generateFakeProducts(),
+            'client' => Client::all()->random()->id,
+            'status' => $this->faker->randomElement(['pending', 'paid', 'cancelled']),
         ];
     }
 }
