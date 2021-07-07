@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -12,11 +13,9 @@ class ClientTest extends TestCase
      */
     public function testList()
     {
-        $this->get('/clients');
+        $user = User::find(1);
 
-        $this->assertEquals(
-            401,
-            $this->response->status()
-        );
+        $this->actingAs($user)->get('/clients');
+        $this->seeStatusCode(200);
     }
 }
