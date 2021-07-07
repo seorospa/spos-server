@@ -18,8 +18,8 @@ class ClientController extends Controller
             $this->request,
             [
                 'name' => 'required|max:31',
-                'email' => 'nulleable|email',
-                'phone' => 'string|max:31'
+                'email' => 'nullable|email',
+                'phone' => 'nullable|string|max:31'
             ]
         );
 
@@ -37,9 +37,10 @@ class ClientController extends Controller
     public function update($id)
     {
         $params = $this->request->all();
-        Client::findOrFail($id)->update($params);
+        $client = Client::findOrFail($id);
+        $client->update($params);
 
-        return response('');
+        return response()->json($client);
     }
 
     public function delete($id)
