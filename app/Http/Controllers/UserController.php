@@ -16,15 +16,18 @@ class UserController extends Controller
 
     public function create()
     {
-        $this->validate($this->request, ['name' => 'required', 'password' => 'required']);
+        $this->validate($this->request, [
+          'name' => 'required',
+          'password' => 'required',
+        ]);
         $this->validate_params();
 
         $params = $this->request->all();
         $params['password'] = Hash::make($params['password']);
 
-        User::create($params);
+        $user = User::create($params);
 
-        return response('');
+        return response()->json($user);
     }
 
     public function read($id)
@@ -41,9 +44,9 @@ class UserController extends Controller
         $params = $this->request->all();
         $params['password'] = Hash::make($params['password']);
 
-        User::findOrFail($id)->update($params);
+        $user = User::findOrFail($id)->update($params);
 
-        return response('');
+        return response($user);
     }
 
     public function delete($id)
@@ -84,7 +87,7 @@ class UserController extends Controller
             [
                 'name' => 'max:63|min:1',
                 'password' => 'max:63|min:8',
-                'mail' => 'mail'
+                'email' => 'nullable|email'
             ]
         );
     }

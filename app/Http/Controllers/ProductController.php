@@ -42,7 +42,7 @@ class ProductController extends Controller
             [
                 'title' => 'required',
                 'code' => 'required',
-                'price' => 'required'
+                'price' => 'required',
             ]
         );
 
@@ -64,9 +64,10 @@ class ProductController extends Controller
         $this->validate_props();
 
         $params = $this->request->all();
-        Product::findOrFail($id)->update($params);
+        $product = Product::findOrFail($id)->update($params);
+        $product->update($params);
 
-        return response('');
+        return response()->json($product);
     }
 
     public function delete($id)
@@ -81,14 +82,15 @@ class ProductController extends Controller
         return $this->validate($this->request, [
             'title' => 'max:63',
             'code' => 'alpha_dash|max:127',
-            'price' => 'numeric',
-            'qty' => 'numeric',
-            'cost' => 'numeric',
-            'min' => 'numeric',
-            'max' => 'numeric',
-            'ws_min' => 'numeric',
-            'ws_price' => 'numeric',
-            'category' => 'integer'
+            'qty' => 'nullable|integer|min:0',
+            'cost' => 'nullable|numeric|min:0',
+            'min' => 'nullable|integer|min:0',
+            'max' => 'nullable|integer|min:0',
+            'ws_min' => 'nullable|integer|min:0',
+            'ws_price' => 'nullable|numeric|min:0',
+            'category' => 'nullable|integer|exists:categories,id',
+            'unit' => 'nullable|boolean',
+            'taxes' => 'nullable|string',
         ]);
     }
 }

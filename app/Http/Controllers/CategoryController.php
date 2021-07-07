@@ -17,8 +17,12 @@ class CategoryController extends Controller
     {
         $this->validate($this->request, [
             'name' => 'required|max:31',
-            'father' => 'integer'
+            'father' => 'nullable|integer|exists:categories,id'
         ]);
+
+        if (empty($this->request['father'])) {
+          $this->request['father'] = 0;
+        }
 
         $category = Category::create($this->request->all());
 
@@ -27,16 +31,25 @@ class CategoryController extends Controller
 
     public function read($id)
     {
-        $ticket = Category::findOrFail($id);
-        return response()->json($ticket);
+        $category = Category::findOrFail($id);
+        return response()->json($category);
     }
 
     public function update($id)
     {
-        $params = $this->request->all();
-        Category::findOrFail($id)->update($params);
+        $this->validate($this->request, [
+            'name' => 'required|max:31',
+            'father' => 'nullable|integer|exists:categories,id'
+        ]);
 
-        return response('');
+        if (empty($this->request['father'])) {
+          $this->request['father'] = 0;
+        }
+
+        $category = Category::findOrFail($id);
+        $category->update($this->request->all());
+
+        return response()->json($category);
     }
 
     public function delete($id)
