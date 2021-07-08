@@ -82,6 +82,7 @@ class ProductController extends Controller
         return $this->validate($this->request, [
             'title' => 'max:63',
             'code' => 'alpha_dash|max:127',
+            'price' => 'numeric|min:0',
             'qty' => 'nullable|integer|min:0',
             'cost' => 'nullable|numeric|min:0',
             'min' => 'nullable|integer|min:0',

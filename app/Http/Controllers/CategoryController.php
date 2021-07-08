@@ -17,12 +17,8 @@ class CategoryController extends Controller
     {
         $this->validate($this->request, [
             'name' => 'required|max:31',
-            'father' => 'nullable|integer|exists:categories,id'
+            'father' => 'integer|exists:categories,id'
         ]);
-
-        if (empty($this->request['father'])) {
-          $this->request['father'] = 0;
-        }
 
         $category = Category::create($this->request->all());
 
@@ -39,12 +35,8 @@ class CategoryController extends Controller
     {
         $this->validate($this->request, [
             'name' => 'required|max:31',
-            'father' => 'nullable|integer|exists:categories,id'
+            'father' => 'integer|exists:categories,id'
         ]);
-
-        if (empty($this->request['father'])) {
-          $this->request['father'] = 0;
-        }
 
         $category = Category::findOrFail($id);
         $category->update($this->request->all());
