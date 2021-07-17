@@ -2,6 +2,19 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+$router->get('/', function () {
+    $arr = [
+        'app' => 'spos',
+        'version' => '0.1',
+        'contributors' => [
+            'Sebastián Osorio <seorospa@gmail.com>',
+            'César Bravo <cbravo@bcyt.cl>',
+            'Matías Gómez <matias.gomez@virginiogomez.cl>'
+        ]
+    ];
+    return response()->json($arr);
+});
+
 $router->post('auth/{id}', 'UserController@login');
 $router->get('users', 'UserController@list');
 
