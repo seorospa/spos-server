@@ -8,7 +8,11 @@ class ClientController extends Controller
 {
     public function list()
     {
-        $clients = Client::all(['id', 'name']);
+        $params = $this->request->all();
+        $limit = $this->request->input('limit', 100);
+        $visible =  $this->request->input('visible', ['id', 'name']);
+
+        $clients = Client::filter($params)->simplePaginate($limit, $visible);;
         return response()->json($clients);
     }
 

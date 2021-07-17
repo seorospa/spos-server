@@ -17,4 +17,12 @@ class Client extends Model
     protected $fillable = [
         'name', 'email', 'phone'
     ];
+
+    public function scopeFilter($query, $params)
+    {
+        if (isset($params['name']) && trim($params['name'] !== ''))
+            $query->where('name', 'LIKE', trim($params['name']) . '%');
+
+        return $query;
+    }
 }
