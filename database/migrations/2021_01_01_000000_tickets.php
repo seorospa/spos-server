@@ -17,7 +17,7 @@ class Tickets extends Migration
             $table->id();
             $table->integer('user');
             $table->string('name');
-            $table->string('products')->default('[]');
+            $table->string('products')->default('{}');
             $table->string('status')->default('pending');
             $table->integer('client')->default(-1);
             $table->timestamps();
