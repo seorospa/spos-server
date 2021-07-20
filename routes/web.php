@@ -60,4 +60,12 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->put('{id}', 'CategoryController@update');
         $router->delete('{id}', 'CategoryController@delete');
     });
+
+    $router->group(['prefix' => 'transactions'], function () use ($router) {
+        $router->get('', 'TransactionController@list');
+        $router->post('', 'TransactionController@create');
+        $router->get('{id}', 'TransactionController@read');
+        $router->put('{id}', 'TransactionController@update');
+        $router->delete('{id}', 'TransactionController@delete');
+    });
 });
