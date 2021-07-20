@@ -27,6 +27,11 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->get('{id}', 'TicketController@read');
         $router->put('{id}', 'TicketController@update');
         $router->delete('{id}', 'TicketController@delete');
+
+        $router->put('/{id}/add', 'TicketController@addProducts');
+        $router->put('/{id}/del', 'TicketController@deleteProduct');
+        $router->put('/{id}/change', 'TicketController@changeProduct');
+        $router->put('/{id}/claim', 'TicketController@claim');
     });
 
     $router->group(['prefix' => 'products'], function () use ($router) {
@@ -35,6 +40,7 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->post('/bulk', 'ProductController@create_bulk');
         $router->get('{id}', 'ProductController@read');
         $router->put('{id}', 'ProductController@update');
+        $router->put('{id}/stock', 'ProductController@stock');
         $router->delete('{id}', 'ProductController@delete');
     });
 
@@ -59,5 +65,9 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->get('{id}', 'CategoryController@read');
         $router->put('{id}', 'CategoryController@update');
         $router->delete('{id}', 'CategoryController@delete');
+    });
+
+    $router->group(['prefix' => 'summary'], function () use ($router) {
+        $router->get('', 'SummaryController@simple');
     });
 });

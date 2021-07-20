@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -75,6 +74,33 @@ class ProductController extends Controller
         Product::findOrFail($id)->delete();
 
         return response('');
+    }
+
+    public function stock($id)
+    {
+        $this->validate(
+            $this->request,
+            ['qty' => 'required|numeric']
+        );
+
+        $qty = $this->request->input('qty');
+        $product = Product::findOrFail($id);
+
+        $qty = max($qty + $product->qty, 0);
+
+        $diff = $product->qty - $qty;
+
+        if ($diff != 0)
+            $this->stock_moviment($product->id, $diff);
+
+        $product->update(['qty' => $qty]);
+
+        return response('');
+    }
+
+    public function stock_moviment($id, $qty)
+    {
+        # code...
     }
 
     public function validate_props()
