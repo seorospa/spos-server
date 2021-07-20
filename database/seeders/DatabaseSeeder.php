@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Ticket;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             Category::factory()->count(30)->create();
             Product::factory()->count(30)->create();
             Ticket::factory()->count(30)->create();
+            Transaction::factory()->count(30)->create();
         } else {
             User::create([
                 'name' => 'admin',
