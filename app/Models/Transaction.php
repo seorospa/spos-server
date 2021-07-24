@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-  use HasFactory;
+    use HasFactory;
 
-  protected $fillable = [
-    'ammount', 'reason', 'debit_or_credit', 'user_id'
-  ];
+    protected $fillable = [
+        'amount', 'reason', 'debit_or_credit', 'user'
+    ];
 }
