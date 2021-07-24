@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\User;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class AuthTest extends TestCase
 {
@@ -13,12 +11,9 @@ class AuthTest extends TestCase
      */
     public function testLogin()
     {
-        $this->post('/auth', ['id' => 1, 'password' => '12345']);
-
-        $this->assertEquals(
-            200,
-            $this->response->status()
-        );
+        $this->post('/auth/1', ['password' => 'password']);
+        $this->seeStatusCode(200);
+        $this->seeJsonStructure(['token']);
     }
 
     public function testRefresh()
@@ -26,10 +21,7 @@ class AuthTest extends TestCase
         $user = User::find(1);
 
         $this->actingAs($user)->get('/auth');
-
-        $this->assertEquals(
-            200,
-            $this->response->status()
-        );
+        $this->seeStatusCode(200);
+        $this->seeJsonStructure(['token']);
     }
 }

@@ -16,21 +16,24 @@ class TicketTest extends TestCase
     public function testRead()
     {
         $user = User::find(1);
+        $tickets = Ticket::get();
 
-        for ($i = 1; $i < 4; $i++) {
-            $ticket = Ticket::find($i)->toArray();
-            $this->actingAs($user)->json('GET', "/tickets/$i")->seeJsonEquals($ticket);
+        foreach ($tickets as $ticket)
+        {
+            $id = $ticket->id;
+            $this->actingAs($user)->json('GET', "/tickets/$id")->seeJsonEquals($ticket->toArray());
         }
     }
 
     public function testNotFound()
     {
         $user = User::find(1);
+        $invalid_ids = [-1, 0, 100000000];
 
-        $response1 = $this->call('GET', '/tickets/-1');
-        $response2 = $this->call('GET', '/tickets/1000000000');
-
-        $this->actingAs($user)->assertEquals(401, $response1->status());
-        $this->actingAs($user)->assertEquals(401, $response2->status());
+        foreach ($invalid_ids as $id)
+        {
+            $this->actingAs($user)->json('GET', "/tickets/$id");
+            $this->seeStatusCode(404);
+        }
     }
 }

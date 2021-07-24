@@ -13,10 +13,6 @@ class UserTest extends TestCase
     public function testList()
     {
         $this->get('/users');
-
-        $this->assertEquals(
-            401,
-            $this->response->status()
-        );
+        $this->seeStatusCode(200);
     }
 }

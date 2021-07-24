@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function list()
     {
-        $visible = ['id', 'title', 'code', 'price'];
+        $visible =  $this->request->input('visible', ['id', 'title', 'code', 'price']);
         $params = $this->request->all();
         $code = $this->request->code;
 
