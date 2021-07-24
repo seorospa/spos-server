@@ -75,6 +75,13 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->delete('{id}', 'TransactionController@delete');
     });
 
+    $router->group(['prefix' => 'taxes'], function () use ($router) {
+        $router->post('/', 'TaxController@create');
+        $router->get('{id}', 'TaxController@read');
+        $router->put('{id}', 'TaxController@update');
+        $router->delete('{id}', 'TaxController@delete');
+    });
+
     $router->group(['prefix' => 'summary'], function () use ($router) {
         $router->get('', 'SummaryController@simple');
     });

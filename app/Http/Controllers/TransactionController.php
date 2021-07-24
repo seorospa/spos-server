@@ -10,7 +10,7 @@ class TransactionController extends Controller
 {
     public function list()
     {
-        $transactions = Transaction::all(['id', 'ammount', 'reason', 'debit_or_credit', 'user_id']);
+        $transactions = Transaction::all(['id', 'amount', 'reason', 'debit_or_credit', 'user']);
         return response()->json($transactions);
     }
 
@@ -19,7 +19,7 @@ class TransactionController extends Controller
         $this->validate_params();
 
         $params = $this->request->all();
-        $params['user_id'] = (object)Auth::user().id;
+        $params['user'] = $this->logged->id;
 
         $transaction = Transaction::create($params);
 
@@ -37,7 +37,7 @@ class TransactionController extends Controller
         $this->validate_params();
 
         $params = $this->request->all();
-        $params['user_id'] = (object)Auth::user().id;
+        $params['user'] = $this->logged->id;
 
         $user = Transaction::findOrFail($id)->update($params);
 
@@ -56,7 +56,7 @@ class TransactionController extends Controller
         return $this->validate(
             $this->request,
             [
-              'ammount' => 'required',
+              'amount' => 'required',
               'reason' => 'required',
               'debit_or_credit' => 'required',
             ]

@@ -8,18 +8,18 @@ class Transactions extends Migration
 {
     public function up()
     {
-      Schema::create('transactions', function (Blueprint $table) {
-        $table->id();
-        $table->float('ammount');
-        $table->string('reason');
-        $table->string('debit_or_credit');
-        $table->integer('user_id');
-        $table->timestamps();
-      });
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id();
+            $table->float('amount');
+            $table->string('reason');
+            $table->string('debit_or_credit');
+            $table->integer('user');
+            $table->timestamps();
+        });
     }
 
     public function down()
     {
-      Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transactions');
     }
 }

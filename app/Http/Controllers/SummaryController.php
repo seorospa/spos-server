@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Ticket;
+use App\Models\Transaction;
 
 class SummaryController extends Controller
 {
     public function simple()
     {
-        $tickets = Ticket::whereDate('updated_at', '=', date('Y-m-d'))->where('status', 'paid')->get();
+        $date = $this->request->input('data', date('Y-m-d'));
+
+        $tickets = Ticket::whereDate('updated_at', $date);
+        $trans = Transaction::whereDate('updated_at', $date)->get(['amount', 'reason']);
+        
+        $paid = $tickets->where('status', 'paid')->get();
 
         $arr = [];
-        foreach ($tickets as $ticket) {
-            $products = json_decode($ticket->products);
+        foreach ($paid as $ticket) {
+            $products = $ticket->products;
 
             foreach ($products as $product) {
                 $category = Category::find($product->category);
@@ -23,6 +29,8 @@ class SummaryController extends Controller
                 $arr[$product->category] = $row;
             }
         }
+
+        $arr['transactions'] = $trans;
 
         return response()->json($arr);
     }
