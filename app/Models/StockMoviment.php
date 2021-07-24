@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ticket extends Model
+class StockMoviment extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,6 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'user', 'products', 'client', 'status'
-
-    ];
-
-    protected $casts = [
-        'products' => 'array'
+        'product', 'qty', 'user'
     ];
 }
-

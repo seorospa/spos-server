@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\StockMoviment;
 
 class ProductController extends Controller
 {
@@ -88,7 +89,7 @@ class ProductController extends Controller
 
         $qty = max($qty + $product->qty, 0);
 
-        $diff = $product->qty - $qty;
+        $diff = $qty - $product->qty;
 
         if ($diff != 0)
             $this->stock_moviment($product->id, $diff);
@@ -100,7 +101,15 @@ class ProductController extends Controller
 
     public function stock_moviment($id, $qty)
     {
-        # code...
+        $user = $this->logged->id;
+
+        $moviment = StockMoviment::create([
+            'product' => $id,
+            'qty' => $qty,
+            'user' => $user
+        ]);
+
+        return $moviment;
     }
 
     public function validate_props()
