@@ -74,7 +74,7 @@ class TicketController extends Controller
 
         $p->update(['qty' => $curr]);
 
-        $reg = json_decode($ticket->products, true);
+        $reg = $ticket->products;
 
         $qty = empty($reg[$code]) ? $qty : $qty + $reg[$code]['qty'];
 
@@ -97,7 +97,7 @@ class TicketController extends Controller
 
         $ticket = Ticket::findOrFail($id);
 
-        $reg = json_decode($ticket->products, true);
+        $reg = $ticket->products;
 
         unset($reg[$code]);
 
@@ -113,7 +113,7 @@ class TicketController extends Controller
 
         $ticket = Ticket::findOrFail($id);
 
-        $reg = json_decode($ticket->products, true);
+        $reg = $ticket->products;
 
         $reg[$code]['qty'] = $qty;
 
