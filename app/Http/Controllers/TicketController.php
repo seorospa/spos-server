@@ -99,7 +99,9 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($id);
         $product = Product::where('code', $code)->first();
 
-        if ($ticket->status != 'pending')
+        $valid = $product->qty ?? 1;
+
+        if ($ticket->status != 'pending' || $valid == 0)
             return response('', 404);
 
         $p = $ticket->products;
