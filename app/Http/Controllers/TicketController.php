@@ -10,7 +10,9 @@ class TicketController extends Controller
     public function list()
     {
         $visible =  $this->request->input('visible', ['id', 'name', 'user', 'status']);
-        $tickets = Ticket::all($visible);
+        $params = $this->request->all();
+
+        $tickets = Ticket::filter($params)->get($visible);
         return response()->json($tickets);
     }
 

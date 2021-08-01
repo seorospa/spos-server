@@ -21,5 +21,13 @@ class Ticket extends Model
     protected $casts = [
         'products' => 'array'
     ];
+
+    public function scopeFilter($query, $params)
+    {
+        if (isset($params['status']))
+            $query->where('status', $params['status']);
+
+        return $query;
+    }
 }
 
