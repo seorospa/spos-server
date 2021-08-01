@@ -15,8 +15,7 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'user', 'products', 'client', 'status'
-
+        'name', 'user', 'client', 'status'
     ];
 
     protected $casts = [
