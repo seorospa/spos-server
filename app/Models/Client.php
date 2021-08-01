@@ -18,6 +18,10 @@ class Client extends Model
         'name', 'email', 'phone'
     ];
 
+    static $listed = [
+        'id', 'name', 'email', 'phone',
+    ];
+
     public function scopeFilter($query, $params)
     {
         if (isset($params['name']) && trim($params['name'] !== ''))

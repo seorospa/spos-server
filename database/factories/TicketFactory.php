@@ -15,9 +15,9 @@ class TicketFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'user' => User::all()->random()->id,
-            'client' => Client::all()->random()->id,
-            'status' => $this->faker->randomElement(['pending', 'paid', 'cancelled']),
+            'user_id' => User::all()->random()->id,
+            'client_id' => Client::all()->random()->id,
+            'status' => $this->faker->randomElement(['client', 'paid', 'pending', 'credit']),
         ];
     }
 }

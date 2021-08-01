@@ -15,7 +15,11 @@ class Tax extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'percentage', 'fixed'
+        'name', 'percentage',
+    ];
+
+    static $listed = [
+        'name', 'percentage',
     ];
 
     public function scopeFilter($query, $params)

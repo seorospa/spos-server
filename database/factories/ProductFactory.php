@@ -12,17 +12,20 @@ class ProductFactory extends Factory
 
     protected static $productName = [
         'adjective' => [
-          'Pequeño', 'Ergonómico', 'Rústico', 'Smart', 'Increíble',
-          'Fantástico', 'Práctico', 'Moderno', 'Enorme', 'Mediocre',
-          'Profesional', 'Ligero', 'Aerodinámico', 'Durable'],
+            'Pequeño', 'Ergonómico', 'Rústico', 'Smart', 'Increíble',
+            'Fantástico', 'Práctico', 'Moderno', 'Enorme', 'Mediocre',
+            'Profesional', 'Ligero', 'Aerodinámico', 'Durable'
+        ],
         'material' => [
-          'Acero', 'Metal', 'Concreto', 'Plástico', 'Algodón', 'Cemento',
-          'Goma', 'Cuero', 'Seda', 'Lana', 'Lino', 'Mármol', 'Fierro',
-          'Bronce', 'Cobre', 'Aluminio', 'Papel'],
+            'Acero', 'Metal', 'Concreto', 'Plástico', 'Algodón', 'Cemento',
+            'Goma', 'Cuero', 'Seda', 'Lana', 'Lino', 'Mármol', 'Fierro',
+            'Bronce', 'Cobre', 'Aluminio', 'Papel'
+        ],
         'product' => [
-          'Silla', 'Auto', 'Computador', 'Guantes', 'Pantalones', 'Camisa',
-          'Mesa', 'Zapatos', 'Sombrero', 'Plato', 'Cuchillo', 'Botella', 'Abrigo',
-          'Lámpara', 'Teclado', 'Bolso', 'Banco', 'Reloj', 'Billetera'],
+            'Silla', 'Auto', 'Computador', 'Guantes', 'Pantalones', 'Camisa',
+            'Mesa', 'Zapatos', 'Sombrero', 'Plato', 'Cuchillo', 'Botella', 'Abrigo',
+            'Lámpara', 'Teclado', 'Bolso', 'Banco', 'Reloj', 'Billetera'
+        ],
     ];
 
     public function productName()
@@ -40,15 +43,15 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'qty' => $this->faker->numberBetween(1, 100),
             'cost' => function (array $attributes) {
-              return $this->faker->randomFloat(2, 1, $attributes['price']);
+                return $this->faker->randomFloat(2, 1, $attributes['price']);
             },
             'min' => $this->faker->numberBetween(1, 100),
             'max' => function (array $attributes) {
-              return $this->faker->numberBetween($attributes['min'], 100);
+                return $this->faker->numberBetween($attributes['min'], 100);
             },
             'ws_min' => $this->faker->numberBetween(1, 100),
             'ws_price' => function (array $attributes) {
-              return $this->faker->numberBetween($attributes['cost'], $attributes['price']);
+                return $this->faker->numberBetween($attributes['cost'], $attributes['price']);
             },
             'category' => Category::all()->random()->id,
             'unit' => '1',

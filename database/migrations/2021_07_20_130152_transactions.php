@@ -13,7 +13,7 @@ class Transactions extends Migration
             $table->float('amount');
             $table->string('reason');
             $table->string('debit_or_credit');
-            $table->integer('user');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

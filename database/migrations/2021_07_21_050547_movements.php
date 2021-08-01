@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class StockMoviment extends Migration
+class Movements extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class StockMoviment extends Migration
      */
     public function up()
     {
-        Schema::create('stock_moviments', function (Blueprint $table) {
+        Schema::create('movements', function (Blueprint $table) {
             $table->id();
-            $table->integer('product');
+            $table->integer('product_id');
             $table->double('qty');
-            $table->integer('user');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class StockMoviment extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stock_moviments');
+        Schema::dropIfExists('movements');
     }
 }

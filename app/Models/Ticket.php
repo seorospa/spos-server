@@ -15,11 +15,23 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'user', 'client', 'status'
+        'name', 'client', 'status'
     ];
 
     protected $casts = [
-        'products' => 'array'
+        'cart' => 'array'
     ];
+
+    static $listed = [
+        'id', 'name', 'user_id', 'status',
+    ];
+
+    public function scopeFilter($query, $params)
+    {
+        if (isset($params['status']))
+            $query->where('status', $params['status']);
+
+        return $query;
+    }
 }
 

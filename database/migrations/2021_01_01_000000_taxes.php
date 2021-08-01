@@ -17,7 +17,6 @@ class Taxes extends Migration
             $table->id();
             $table->string('name');
             $table->double('percentage')->nullable();
-            $table->double('fixed')->nullable();
             $table->timestamps();
         });
     }

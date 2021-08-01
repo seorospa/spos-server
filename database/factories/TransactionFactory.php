@@ -14,7 +14,7 @@ class TransactionFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 1, 1000),
             'reason' => $this->faker->text(10),
             'debit_or_credit' => $this->faker->randomElement(['debit', 'credit']),
-            'user' => 1
+            'user_id' => 1
         ];
     }
 }

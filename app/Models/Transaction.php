@@ -12,4 +12,9 @@ class Transaction extends Model
     protected $fillable = [
         'amount', 'reason', 'debit_or_credit', 'user'
     ];
+
+    public function scopeFilter($query, $params)
+    {
+        return $query;
+    }
 }

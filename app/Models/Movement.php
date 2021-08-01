@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StockMovement extends Model
+class Movement extends Model
 {
     use HasFactory;
 
@@ -17,4 +17,9 @@ class StockMovement extends Model
     protected $fillable = [
         'product', 'qty', 'user'
     ];
+
+    public function scopeFilter($query, $params)
+    {
+        return $query;
+    }
 }

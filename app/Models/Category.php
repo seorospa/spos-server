@@ -15,6 +15,15 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'father',
+        'name', 'father_id',
     ];
+
+    static $listed = [
+        'name', 'father_id',
+    ];
+
+    public function scopeFilter($query, $params)
+    {
+        return $query;
+    }
 }

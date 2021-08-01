@@ -13,10 +13,8 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'password' => '$2y$10$eVlqUoJWL22Kv8xlUTM8HeGqQqw4P06Qbjo6xP8uwnxH6FreBiDIy',
+            'password' => 'password',
             'email' => $this->faker->safeEmail,
-            'is_admin' => false,
-            'permissions' => '',
         ];
     }
 }

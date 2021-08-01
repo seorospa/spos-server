@@ -20,6 +20,29 @@ class Product extends Model
         'unit', 'taxes'
     ];
 
+    static $listed = [
+        'title', 'code', 'price', 'qty',
+    ];
+
+    static $required = [
+        'title', 'code', 'price'
+    ];
+
+    static $rules = [
+        'title' => 'max:31',
+        'code' => 'alpha_dash|max:127|unique',
+        'price' => 'numeric|min:0',
+        'qty' => 'nullable|numeric|min:0',
+        'cost' => 'nullable|numeric|min:0',
+        'min' => 'nullable|numeric|min:0',
+        'max' => 'nullable|numeric|min:0',
+        'ws_min' => 'nullable|numeric|min:0',
+        'ws_price' => 'nullable|numeric|min:0',
+        'category_id' => 'nullable|integer|exists:categories,id',
+        'unit' => 'nullable|boolean',
+        'taxes' => 'nullable|string',
+    ];
+
     public function scopeFilter($query, $params)
     {
         if (isset($params['title']) && trim($params['title'] !== ''))

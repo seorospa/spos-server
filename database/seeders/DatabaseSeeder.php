@@ -19,6 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::create([
+            'name' => 'admin',
+            'password' => 'password',
+            'is_admin' => 1
+        ]);
+
         if (env('APP_DEBUG', true)) {
             User::factory()->count(30)->create();
             Client::factory()->count(30)->create();
@@ -26,12 +32,6 @@ class DatabaseSeeder extends Seeder
             Product::factory()->count(30)->create();
             Ticket::factory()->count(30)->create();
             Transaction::factory()->count(30)->create();
-        } else {
-            User::create([
-                'name' => 'admin',
-                'password' => '$2y$10$eVlqUoJWL22Kv8xlUTM8HeGqQqw4P06Qbjo6xP8uwnxH6FreBiDIy',
-                'is_admin' => 1
-            ]);
         }
     }
 }

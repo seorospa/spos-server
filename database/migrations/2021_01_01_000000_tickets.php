@@ -15,11 +15,11 @@ class Tickets extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('user');
+            $table->integer('user_id');
             $table->string('name');
-            $table->json('products')->default('{}');
+            $table->json('cart')->default('{}');
             $table->string('status')->default('pending');
-            $table->integer('client')->nullable();
+            $table->integer('client_id')->nullable();
             $table->timestamps();
         });
     }
