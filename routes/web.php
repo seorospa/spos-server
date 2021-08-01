@@ -28,9 +28,8 @@ $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->put('{id}', 'TicketController@update');
         $router->delete('{id}', 'TicketController@delete');
 
-        $router->put('/{id}/add', 'TicketController@addProducts');
-        $router->put('/{id}/del', 'TicketController@deleteProduct');
-        $router->put('/{id}/change', 'TicketController@changeProduct');
+        $router->put('/{id}/delete', 'TicketController@deleteProduct');
+        $router->put('/{id}/change', 'TicketController@changeProductQty');
         $router->put('/{id}/claim', 'TicketController@claim');
     });
 

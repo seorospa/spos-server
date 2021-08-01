@@ -65,9 +65,8 @@ class ProductController extends Controller
 
         $params = $this->request->all();
         $product = Product::findOrFail($id)->update($params);
-        $product->update($params);
 
-        return response()->json($product);
+        return response('');
     }
 
     public function delete($id)
@@ -118,11 +117,11 @@ class ProductController extends Controller
             'title' => 'max:63',
             'code' => 'alpha_dash|max:127',
             'price' => 'numeric|min:0',
-            'qty' => 'nullable|integer|min:0',
+            'qty' => 'nullable|numeric|min:0',
             'cost' => 'nullable|numeric|min:0',
-            'min' => 'nullable|integer|min:0',
-            'max' => 'nullable|integer|min:0',
-            'ws_min' => 'nullable|integer|min:0',
+            'min' => 'nullable|numeric|min:0',
+            'max' => 'nullable|numeric|min:0',
+            'ws_min' => 'nullable|numeric|min:0',
             'ws_price' => 'nullable|numeric|min:0',
             'category' => 'nullable|integer|exists:categories,id',
             'unit' => 'nullable|boolean',
