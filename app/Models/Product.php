@@ -30,7 +30,7 @@ class Product extends Model
 
     static $rules = [
         'title' => 'max:31',
-        'code' => 'alpha_dash|max:127|unique',
+        'code' => 'alpha_dash|max:127|unique:products,code',
         'price' => 'numeric|min:0',
         'qty' => 'nullable|numeric|min:0',
         'cost' => 'nullable|numeric|min:0',

@@ -25,7 +25,7 @@ class TicketController extends CruldController
 
     protected function preDelete($ticket)
     {
-        $codes = array_keys($ticket->products);
+        $codes = array_keys($ticket->cart);
 
         foreach ($codes as $code)
             $this->deleteProductFromTicket($ticket, $code);

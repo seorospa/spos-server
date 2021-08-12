@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -41,5 +42,10 @@ class AuthServiceProvider extends ServiceProvider
 
             return $is_pending && Gate::allows('edit-ticket', $ticket);
         });
+
+        Gate::define('user_id', function ($user, $model) {
+            return Schema::hasColumn($model->getTable(), 'user_id');
+        });
+        
     }
 }

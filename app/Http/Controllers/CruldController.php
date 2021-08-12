@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Lumen\Routing\Controller;
 
 class CruldController extends Controller
@@ -43,12 +45,12 @@ class CruldController extends Controller
 
         $this->validate($request, $rules);
 
-        $model = $this->model::create($request->all());
+        $model = new $this->model($request->all());
 
-        if ($model->has('user_id')) {
+        if (Gate::allows('user_id', $model))
             $model->user_id = Auth::user()->id;
-            $model->save();
-        }
+            
+        $model->save();
 
         $res = $model->only('id');
 
@@ -63,15 +65,16 @@ class CruldController extends Controller
 
     public function update(Request $request, int $id)
     {
-        if ($this->gate_edit && Gate::denies($this->gate_edit, $this->model))
-            abort(403);
-
         $rules = $this->model::$rules;
 
         $this->validate($request, $rules);
         
         $params = $request->all();
         $model = $this->model::findOrFail($id);
+
+        if ($this->gate_edit && Gate::denies($this->gate_edit, $model))
+            abort(403);
+
         $model->update($params);
 
         return response()->json($model);
@@ -79,12 +82,12 @@ class CruldController extends Controller
 
     public function delete(int $id)
     {
-        if ($this->gate_edit && Gate::denies($this->gate_edit, $this->model))
-        abort(403);
-
         $model = $this->model::findOrFail($id);
         
-        $model->preDelete($model);
+        if ($this->gate_edit && Gate::denies($this->gate_edit, $model))
+            abort(403);
+
+        $this->preDelete($model);
         $model->delete();
 
         return response('');

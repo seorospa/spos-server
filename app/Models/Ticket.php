@@ -26,6 +26,15 @@ class Ticket extends Model
         'id', 'name', 'user_id', 'status',
     ];
 
+
+    static $required = [
+        'name',
+    ];
+
+    static $rules = [
+        'name' => 'max:15'
+    ];
+
     public function scopeFilter($query, $params)
     {
         if (isset($params['status']))
