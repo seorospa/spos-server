@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Ticket;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -77,24 +78,18 @@ class TicketController extends CruldController
 
     public function deleteProduct(Request $request, int $id)
     {
-        $this->validate(
-            $request,
-            [
-                'code' => 'required|exists:products,code'
-            ]
-        );
+        $this->validate($request, ['code' => 'required|max:31']);
 
         $ticket = Ticket::findOrFail($id);
 
-        if (Gate::denies('ticket-product', $ticket))
+        if (!key_exists($request->code, $ticket->cart) || Gate::denies('ticket-product', $ticket))
             abort(401);
-
 
         $this->deleteProductFromTicket($ticket, $request->code);
 
         $ticket->save();
 
-        return response('');
+        return response()->json($ticket);
     }
 
     protected function deleteProductFromTicket(Ticket $ticket, string $code)
@@ -114,5 +109,53 @@ class TicketController extends CruldController
         unset($cart[$code]);
 
         $ticket->cart = $cart;
+    }
+
+    public function changeCommonProduct(Request $request, int $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'title' => 'required|max:31',
+                'price' => 'required|numeric',
+                'qty' => 'required|numeric',
+                'code' => 'max:31',
+            ]
+        );
+
+        $ticket = Ticket::findOrFail($id);
+        $cart = $ticket->cart;
+        $title = $request->title;
+        $price = $request->price;
+        $qty = $request->qty;
+
+        $code = $request->code ?? $this->generateRandomCode($ticket);
+
+        $commonProductCategory = Category::where('name', 'common_product')->first();
+
+        $cart[$code] = [
+            'title' => $title,
+            'price' => $price,
+            'category' => $commonProductCategory->id,
+            'qty' => $qty,
+            'code' => $code,
+            'is_common' => true,
+        ];
+
+        $ticket->cart = $cart;
+        $ticket->save();
+
+        return response()->json($ticket);
+    }
+
+    private function generateRandomCode(array $cart, $length = 20)
+    {
+        $code = '';
+
+        do {
+            $code = '~' . substr(base64_encode(mt_rand()), 0, $length);
+        } while (key_exists($code, $cart));
+
+        return $code;
     }
 }

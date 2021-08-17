@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
             'is_admin' => 1
         ]);
 
+        Category::create([
+            'name' => 'common_product',
+        ]);
+
         if (env('APP_DEBUG', true)) {
             User::factory()->count(30)->create();
             Client::factory()->count(30)->create();

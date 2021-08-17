@@ -42,8 +42,10 @@ $router->group(['prefix' => 'auth'], function () use ($router) {
 
 $router->put('/products/{id}/stock', 'ProductController@stock');
 
-$router->group(['prefix' => 'tickets'], function () use ($router) {
-    $router->delete('/{id}/cart', 'TicketController@deleteProduct');
-    $router->put('/{id}/cart', 'TicketController@changeProductQty');
-    $router->put('/{id}/claim', 'TicketController@claim');
+$router->group(['prefix' => 'tickets/{id}'], function () use ($router) {
+    $router->delete('/cart', 'TicketController@deleteProduct');
+    $router->put('/cart', 'TicketController@changeProductQty');
+    $router->post('/cart/common', 'TicketController@changeCommonProduct');
+    $router->put('/claim', 'TicketController@claim');
 });
+
