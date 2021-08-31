@@ -44,8 +44,8 @@ class TicketController extends CruldController
 
         $ticket = Ticket::findOrFail($id);
 
-        if (Gate::denies('ticket-product', $ticket))
-            abort(403);
+        // if (Gate::denies('ticket-product', $ticket)) //TODO: DELETE THIS
+        //     abort(403);
 
         $code = $request->code;
         $qty = $request->qty;

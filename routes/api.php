@@ -49,3 +49,8 @@ $router->group(['prefix' => 'tickets/{id}'], function () use ($router) {
     $router->put('/claim', 'TicketController@claim');
 });
 
+$router->group(['prefix' => 'summary'], function () use ($router) {
+    $router->get('', 'SummaryController@simple');
+    $router->get('/latest', 'SummaryController@latestSales');
+    $router->get('/stockAlerts', 'SummaryController@stockAlerts');
+});
